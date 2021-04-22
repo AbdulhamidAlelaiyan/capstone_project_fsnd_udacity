@@ -6,6 +6,12 @@ database_path = os.environ['DATABASE_URL']
 
 db = SQLAlchemy()
 
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.app = app
+    db.init_app(app)
+
 '''
 Movie
 Have title and release data
@@ -32,15 +38,22 @@ class Movie(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def format(self):
-        actors = MovieActor.query.filter_by(movie_id=self.id).all()
-        actors_formatted = [actor.format() for actor in actors]
+    def format(self, depth=True):
+        # actors = MovieActor.query.filter_by(movie_id=self.id).all()
+        # actors_formatted = [actor.format() for actor in actors]
+        if depth:
+            actors_ids = MovieActor.query.filter_by(movie_id=self.id).all()
+            actors_formatted = [Actor.query.filter_by(id=actor_id.actor_id).first().format(False) for actor_id in actors_ids]
+            return {
+                'title': self.title,
+                'release_date': self.release_date,
+                'actors': actors_formatted,
+            }
         return {
-            'id': self.id,
-            'title': self.title,
-            'release_date': self.release_date,
-            'actors': actors_formatted,
-        }
+                'title': self.title,
+                'release_date': self.release_date,
+            }
+
 
 '''
 Actors
@@ -70,16 +83,22 @@ class Actor(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def format(self):
-        movies = MovieActor.query.filter_by(actor_id=self.id).all()
-        movies_formatted = [movie.format() for movie in movies]
+    def format(self, depth=True):
+        if depth:
+            movies_ids = MovieActor.query.filter_by(actor_id=self.id).all()
+            movies_formatted = [Movie.query.filter_by(id=movie_id.movie_id).first().format(False) for movie_id in movies_ids]
+            return {
+                'name': self.name,
+                'age': self.age,
+                'gender': self.gender,
+                'movies': movies_formatted,
+            }
+
         return {
-            'id': self.id,
-            'name': self.name,
-            'age': self.age,
-            'gender': self.gender,
-            'movies': movies_formatted,
-        }
+                'name': self.name,
+                'age': self.age,
+                'gender': self.gender,
+            }
 
 '''
 MovieActor

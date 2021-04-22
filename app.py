@@ -2,17 +2,18 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import Movie, Actor, MovieActor
+from models import Movie, Actor, MovieActor, setup_db
 from auth import requires_auth
 
 
 def create_app(test_config=None):
   app = Flask(__name__)
   CORS(app)
-
+  setup_db(app)
   '''
     App routes
   '''
+
   @app.route('/')
   def check_health():
     return jsonify({
@@ -21,8 +22,14 @@ def create_app(test_config=None):
     })
 
   @app.route('/actors')
+  @requires_auth('read:actors')
   def get_all_actor(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    actors = Actor.query.all()
+    actors_formatted = [actor.format() for actor in actors]
+    return jsonify({
+      'actors': actors_formatted,
+      'success': True
+    })
 
   @app.route('/movies')
   def get_all_movies(*args, **kwargs):
