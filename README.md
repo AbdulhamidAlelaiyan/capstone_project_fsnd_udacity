@@ -31,33 +31,43 @@ All permissions a Casting Director has and:
     - [x] Intemediary Table for movies and actors many-to-many relationship
 * Endpoints
     - [ ] GET /actors
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] GET /movies
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] GET /actors/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] GET /movies/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] POST /actors
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] POST /movies
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] PATCH /actors/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] PATCH /movies/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] DELETE /actors/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
     - [ ] DELETE /movies/:id
+        - [ ] Documentation
         - [ ] Testing
         - [ ] Implementation
 * Roles
