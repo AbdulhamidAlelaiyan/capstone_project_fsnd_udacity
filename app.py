@@ -32,8 +32,14 @@ def create_app(test_config=None):
     })
 
   @app.route('/movies')
+  @requires_auth('read:movies')
   def get_all_movies(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    movies = Movie.query.all()
+    movies_formatted = [movie.format() for movie in movies]
+    return jsonify({
+      'movies': movies_formatted,
+      'success': True
+    })
 
   @app.route('/actors/<id>')
   def get_actor(*args, **kwargs):

@@ -48,6 +48,20 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertEqual(data['actors'], [])
 
+    def test_unauthenticated_get_movies(self):
+        response = self.client().get('/movies', headers=self.headers)
+        data = json.loads(response.data)
+        
+        self.assertEqual(data['error'], 401)
+
+    def test_authenticated_get_movies(self):
+        self.headers['Authorization'] = self.tokens['casting_assistant']
+
+        response = self.client().get('/movies', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(data['movies'], [])
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

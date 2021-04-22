@@ -5,7 +5,7 @@ Application that helps agencies to assign actors to movies.
 ![Database Diagram](https://i.ibb.co/KsNHmPw/Screen-Shot-2021-04-22-at-11-33-02-AM.png)
 
 # Installation Instructions
-```
+```bash
 pip3 install -r requirements.txt
 export DATABASE_URL="postgresql://[user]:[pass]@[addr]:[port]/[db_name]"
 python3 manage.py db init
@@ -34,10 +34,10 @@ All permissions a Casting Director has and:
         - [x] Documentation
         - [x] Testing
         - [x] Implementation
-    - [ ] GET /movies
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
+    - [x] GET /movies
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
     - [ ] GET /actors/:id
         - [ ] Documentation
         - [ ] Testing
@@ -83,8 +83,8 @@ All permissions a Casting Director has and:
 - Request Arguments: None
 - Returns: HTTP Status code 200
 - Sample: 
-    ```
-    curl -H 'Accept: application/json' -H "Authorization: Bearer ${TOKEN}" http://0.0.0.0:8080/actors
+    ```bash
+    http GET 127.0.0.1:8080/actors  'Authorization: Bearer ${TOKEN}'
     ```
 - Response: 
     ```json
@@ -112,14 +112,34 @@ All permissions a Casting Director has and:
         "success": true
     }
     ```
+## GET /movies
+- Returns all movies and their actors
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http GET 127.0.0.1:8080/movies  'Authorization: Bearer ${TOKEN}'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 39
+    Content-Type: application/json
+    Date: Thu, 22 Apr 2021 20:53:09 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
 
+    {
+        "movies": [],
+        "success": true
+    }
+    ```
 
 # Testing Instructions
 To run the tests:
-```
+```bash
 dropdb casting_agency_test
 createdb casting_agency_test
 psql casting_agency_test < casting_agency
-export DATABASE_URL=${TEST_DATABASE_URL}
 python3 test_app.py
 ```
