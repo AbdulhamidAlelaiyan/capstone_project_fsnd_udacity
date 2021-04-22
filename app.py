@@ -2,18 +2,63 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import setup_db
+from models import Movie, Actor, MovieActor
 from auth import requires_auth
 
 
 def create_app(test_config=None):
-  # create and configure the app
   app = Flask(__name__)
-  setup_db(app)
   CORS(app)
 
-  
+  '''
+    App routes
+  '''
+  @app.route('/')
+  def check_health():
+    return jsonify({
+      "success": True,
+      "message": "Server working fine"
+    })
 
+  @app.route('/actors')
+  def get_all_actor(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/movies')
+  def get_all_movies(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/actors/<id>')
+  def get_actor(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/movies/<id>')
+  def get_movie(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/actors', methods=['POST'])
+  def create_actor(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/movies', methods=['POST'])
+  def create_movie(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/actors/<id>', methods=['PATCH'])
+  def update_actor(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/movies/<id>', methods=['PATCH'])
+  def update_movie(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/actors/<id>', methods=['DELETE'])
+  def delete_actor(*args, **kwargs):
+    return "Not implemented 'yet'!"
+
+  @app.route('/movies/<id>', methods=['DELETE'])
+  def delete_movie(*args, **kwargs):
+    return "Not implemented 'yet'!"
 
   '''
   Error Handlers based on HTTP status codes

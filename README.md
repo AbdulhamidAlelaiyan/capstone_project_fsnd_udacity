@@ -7,6 +7,7 @@ Application that helps agencies to assign actors to movies.
 # Installation Instructions
 ```
 pip3 install -r requirements.txt
+export DATABASE_URL="postgresql://[user]:[pass]@[addr]:[port]/[db_name]"
 python3 manage.py db init
 python3 manage.py db upgrade
 python3 app.py
@@ -33,6 +34,12 @@ All permissions a Casting Director has and:
         - [ ] Testing
         - [ ] Implementation
     - [ ] GET /movies
+        - [ ] Testing
+        - [ ] Implementation
+    - [ ] GET /actors/:id
+        - [ ] Testing
+        - [ ] Implementation
+    - [ ] GET /movies/:id
         - [ ] Testing
         - [ ] Implementation
     - [ ] POST /actors
