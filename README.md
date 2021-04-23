@@ -46,10 +46,10 @@ All permissions a Casting Director has and:
         - [x] Documentation
         - [x] Testing
         - [x] Implementation
-    - [ ] POST /actors
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
+    - [x] POST /actors
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
     - [ ] POST /movies
         - [ ] Documentation
         - [ ] Testing
@@ -255,6 +255,33 @@ Note: all http request in the documentation was done thourgh cli tool called htt
             ],
             "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
             "title": "random movie 1"
+        },
+        "success": true
+    }
+    ```
+
+## POST /actors
+- create new movies 
+- Request Arguments: None
+- Returns: HTTP Status code 201
+- Sample: 
+    ```bash
+    http POST 127.0.0.1:8080/actors  'Authorization: Bearer ${TOKEN}' name='mohammed saleh' age=21 gender=male
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 201 CREATED
+    Access-Control-Allow-Origin: *
+    Content-Length: 111
+    Content-Type: application/json
+    Date: Fri, 23 Apr 2021 22:30:21 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "actor": {
+            "age": "21",
+            "gender": "male",
+            "name": "mohammed saleh"
         },
         "success": true
     }

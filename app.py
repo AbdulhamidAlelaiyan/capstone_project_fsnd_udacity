@@ -66,11 +66,37 @@ def create_app(test_config=None):
       return abort(404)
 
   @app.route('/actors', methods=['POST'])
+  @requires_auth('create:actors')
   def create_actor(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      data = request.get_json()
+      new_actor = Actor(name=data['name'], age=data['age']
+        , gender=data['gender'])
+      new_actor.insert()
+
+      return jsonify({
+        'success': True,
+        'actor': data
+      }), 201
+    except Exception as e:
+      print(e)
+      return abort(400)
+
 
   @app.route('/movies', methods=['POST'])
+  @requires_auth('create:movies')
   def create_movie(*args, **kwargs):
+    # try:
+    #   data = request.get_json()
+    #   new_movie = Movie(title=data['title'], release_date=data['release_date'])
+    #   new_movie.insert()
+      
+    #   return jsonify({
+    #     'success': True,
+    #     'movie': data
+    #   }), 201
+    # except:
+    #   return abort(400)
     return "Not implemented 'yet'!"
 
   @app.route('/actors/<id>', methods=['PATCH'])
