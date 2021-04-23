@@ -77,7 +77,7 @@ All permissions a Casting Director has and:
 
 # API Documentation
 
-
+Note: all http request in the documentation was done thourgh cli tool called httpie, for more information please visit [httpie website](https://httpie.io/).
 ## GET /actors
 - Returns all actors and their movies
 - Request Arguments: None
@@ -90,23 +90,42 @@ All permissions a Casting Director has and:
     ```json
     HTTP/1.0 200 OK
     Access-Control-Allow-Origin: *
-    Content-Length: 261
+    Content-Length: 743
     Content-Type: application/json
-    Date: Thu, 22 Apr 2021 12:12:15 GMT
+    Date: Thu, 22 Apr 2021 21:40:23 GMT
     Server: Werkzeug/0.15.5 Python/3.9.2
 
     {
         "actors": [
             {
-                "age": 10,
+                "age": 21,
                 "gender": "male",
                 "movies": [
                     {
-                        "release_date": "Thu, 22 Apr 2021 13:40:01 GMT",
-                        "title": "sometitle"
+                        "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                        "title": "random movie 1"
+                    },
+                    {
+                        "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                        "title": "random movie 2"
                     }
                 ],
-                "name": "somenmae"
+                "name": "random actor  1"
+            },
+            {
+                "age": 30,
+                "gender": "female",
+                "movies": [
+                    {
+                        "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                        "title": "random movie 1"
+                    },
+                    {
+                        "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                        "title": "random movie 2"
+                    }
+                ],
+                "name": "random actor 2"
             }
         ],
         "success": true
@@ -124,13 +143,82 @@ All permissions a Casting Director has and:
     ```json
     HTTP/1.0 200 OK
     Access-Control-Allow-Origin: *
-    Content-Length: 39
+    Content-Length: 734
     Content-Type: application/json
-    Date: Thu, 22 Apr 2021 20:53:09 GMT
+    Date: Thu, 22 Apr 2021 21:41:08 GMT
     Server: Werkzeug/0.15.5 Python/3.9.2
 
     {
-        "movies": [],
+        "movies": [
+            {
+                "actors": [
+                    {
+                        "age": 21,
+                        "gender": "male",
+                        "name": "random actor  1"
+                    },
+                    {
+                        "age": 30,
+                        "gender": "female",
+                        "name": "random actor 2"
+                    }
+                ],
+                "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                "title": "random movie 1"
+            },
+            {
+                "actors": [
+                    {
+                        "age": 21,
+                        "gender": "male",
+                        "name": "random actor  1"
+                    },
+                    {
+                        "age": 30,
+                        "gender": "female",
+                        "name": "random actor 2"
+                    }
+                ],
+                "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                "title": "random movie 2"
+            }
+        ],
+        "success": true
+    }
+    ```
+## GET /actors/:id
+- Returns actor by id
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http GET 127.0.0.1:8080/actors/1  'Authorization: Bearer ${TOKEN}'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 352
+    Content-Type: application/json
+    Date: Fri, 23 Apr 2021 10:25:39 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "actor": {
+            "age": 21,
+            "gender": "male",
+            "movies": [
+                {
+                    "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                    "title": "random movie 1"
+                },
+                {
+                    "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+                    "title": "random movie 2"
+                }
+            ],
+            "name": "random actor  1"
+        },
         "success": true
     }
     ```
@@ -141,5 +229,6 @@ To run the tests:
 dropdb casting_agency_test
 createdb casting_agency_test
 psql casting_agency_test < casting_agency
+psql casting_agency_test < casting_agency_data.dump
 python3 test_app.py
 ```
