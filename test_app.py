@@ -111,6 +111,26 @@ class CastingAgencyTestCase(unittest.TestCase):
         
         self.assertEqual(response.status_code, 401)
 
+    def test_authenticated_create_movie(self):
+        movie = {
+            "title": "ahmed khalid",
+            "release_date": '2020-10-10',
+        }
+
+        self.headers['Authorization'] = self.tokens['executive_producer']
+        response = self.client().post('/movies', json=movie, headers=self.headers)
+        
+        self.assertEqual(response.status_code, 201)
+
+    def test_unauthenticated_create_movie(self):
+        movie = {
+            "title": "ahmed khalid",
+            "release_date": '2020-10-10',
+        }
+        response = self.client().post('/movies', json=movie, headers=self.headers)
+        
+        self.assertEqual(response.status_code, 401)
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()

@@ -261,7 +261,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
     ```
 
 ## POST /actors
-- create new movies 
+- create new actor 
 - Request Arguments: None
 - Returns: HTTP Status code 201
 - Sample: 
@@ -282,6 +282,31 @@ Note: all http request in the documentation was done thourgh cli tool called htt
             "age": "21",
             "gender": "male",
             "name": "mohammed saleh"
+        },
+        "success": true
+    }
+    ```
+## POST /movies
+- create new movie 
+- Request Arguments: None
+- Returns: HTTP Status code 201
+- Sample: 
+    ```bash
+    http POST 127.0.0.1:8080/movies  'Authorization: Bearer ${TOKEN}' title='sometitle 123' release_date='2020-10-10'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 201 CREATED
+    Access-Control-Allow-Origin: *
+    Content-Length: 105
+    Content-Type: application/json
+    Date: Fri, 23 Apr 2021 22:51:24 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "movie": {
+            "release_date": "2020-10-10",
+            "title": "sometitle 123"
         },
         "success": true
     }
