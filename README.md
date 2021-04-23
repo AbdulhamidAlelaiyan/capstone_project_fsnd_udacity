@@ -38,14 +38,14 @@ All permissions a Casting Director has and:
         - [x] Documentation
         - [x] Testing
         - [x] Implementation
-    - [ ] GET /actors/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
-    - [ ] GET /movies/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
+    - [x] GET /actors/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
+    - [x] GET /movies/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
     - [ ] POST /actors
         - [ ] Documentation
         - [ ] Testing
@@ -218,6 +218,43 @@ Note: all http request in the documentation was done thourgh cli tool called htt
                 }
             ],
             "name": "random actor  1"
+        },
+        "success": true
+    }
+    ```
+## GET /movies/:id
+- Returns movie by id
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http GET 127.0.0.1:8080/movies/1  'Authorization: Bearer ${TOKEN}'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 346
+    Content-Type: application/json
+    Date: Fri, 23 Apr 2021 10:36:24 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "movie": {
+            "actors": [
+                {
+                    "age": 21,
+                    "gender": "male",
+                    "name": "random actor  1"
+                },
+                {
+                    "age": 30,
+                    "gender": "female",
+                    "name": "random actor 2"
+                }
+            ],
+            "release_date": "Fri, 23 Apr 2021 00:34:43 GMT",
+            "title": "random movie 1"
         },
         "success": true
     }

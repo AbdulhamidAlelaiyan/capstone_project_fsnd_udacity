@@ -56,7 +56,14 @@ def create_app(test_config=None):
   @app.route('/movies/<id>')
   @requires_auth('read:movies')
   def get_movie(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      actor = Movie.query.filter_by(id=kwargs['id']).all()[0]
+      return jsonify({
+        'success': True,
+        'movie': actor.format(),
+      })
+    except:
+      return abort(404)
 
   @app.route('/actors', methods=['POST'])
   def create_actor(*args, **kwargs):

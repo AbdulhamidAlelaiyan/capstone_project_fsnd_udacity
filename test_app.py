@@ -75,6 +75,20 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertTrue(data['error'], 401)
 
+    def test_authenticated_get_movie_by_id(self):
+        self.headers['Authorization'] = self.tokens['casting_assistant']
+
+        response = self.client().get('/movies/1', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertTrue(data['movie'])
+
+    def test_unauthenticated_get_movie_by_id(self):
+        response = self.client().get('/movies/1', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertTrue(data['error'], 401)
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
