@@ -62,14 +62,14 @@ All permissions a Casting Director has and:
         - [x] Documentation
         - [x] Testing
         - [x] Implementation
-    - [ ] DELETE /actors/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
-    - [ ] DELETE /movies/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
+    - [x] DELETE /actors/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
+    - [x] DELETE /movies/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
 * Roles
     - [x] Casting Assistant
     - [x] Casting Director
@@ -78,13 +78,14 @@ All permissions a Casting Director has and:
 # API Documentation
 
 Note: all http request in the documentation was done thourgh cli tool called httpie, for more information please visit [httpie website](https://httpie.io/).
+
 ## GET /actors
 - Returns all actors and their movies
 - Request Arguments: None
 - Returns: HTTP Status code 200
 - Sample: 
     ```bash
-    http GET 127.0.0.1:8080/actors  'Authorization: Bearer ${TOKEN}'
+    http GET 127.0.0.1:8080/actors  'Authorization: Bearer '"$jwt_executive_producer"''
     ```
 - Response: 
     ```json
@@ -137,7 +138,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 - Returns: HTTP Status code 200
 - Sample: 
     ```bash
-    http GET 127.0.0.1:8080/movies  'Authorization: Bearer ${TOKEN}'
+    http GET 127.0.0.1:8080/movies  'Authorization: Bearer '"$jwt_executive_producer"''
     ```
 - Response: 
     ```json
@@ -192,7 +193,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 - Returns: HTTP Status code 200
 - Sample: 
     ```bash
-    http GET 127.0.0.1:8080/actors/1  'Authorization: Bearer ${TOKEN}'
+    http GET 127.0.0.1:8080/actors/1  'Authorization: Bearer '"$jwt_executive_producer"''
     ```
 - Response: 
     ```json
@@ -228,7 +229,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 - Returns: HTTP Status code 200
 - Sample: 
     ```bash
-    http GET 127.0.0.1:8080/movies/1  'Authorization: Bearer ${TOKEN}'
+    http GET 127.0.0.1:8080/movies/1  'Authorization: Bearer '"$jwt_executive_producer"''
     ```
 - Response: 
     ```json
@@ -266,7 +267,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 - Returns: HTTP Status code 201
 - Sample: 
     ```bash
-    http POST 127.0.0.1:8080/actors  'Authorization: Bearer ${TOKEN}' name='mohammed saleh' age=21 gender=male
+    http POST 127.0.0.1:8080/actors  'Authorization: Bearer '"$jwt_executive_producer"'' name='mohammed saleh' age=21 gender=male
     ```
 - Response: 
     ```json
@@ -292,7 +293,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 - Returns: HTTP Status code 201
 - Sample: 
     ```bash
-    http POST 127.0.0.1:8080/movies  'Authorization: Bearer ${TOKEN}' title='sometitle 123' release_date='2020-10-10'
+    http POST 127.0.0.1:8080/movies  'Authorization: Bearer '"$jwt_executive_producer"'' title='sometitle 123' release_date='2020-10-10'
     ```
 - Response: 
     ```json
@@ -311,13 +312,37 @@ Note: all http request in the documentation was done thourgh cli tool called htt
         "success": true
     }
     ```
-## PATCH /movies/:id
-- create new movie 
+## PATCH /actors/:id
+- update actor data 
 - Request Arguments: None
-- Returns: HTTP Status code 201
+- Returns: HTTP Status code 200
 - Sample: 
     ```bash
-    http PATCH 127.0.0.1:8080/movies/1  'Authorization: Bearer ${TOKEN}' title='someactor 102'
+    http PATCH 127.0.0.1:8080/actors/1  'Authorization: Bearer '"$jwt_executive_producer"'' name='somename 102'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 68
+    Content-Type: application/json
+    Date: Sat, 24 Apr 2021 16:50:27 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "actor": {
+            "name": "somename 102"
+        },
+        "success": true
+    }
+    ```
+## PATCH /movies/:id
+- update movie data 
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http PATCH 127.0.0.1:8080/movies/1  ''Authorization: Bearer '"$jwt_executive_producer"'' title='someactor 102'
     ```
 - Response: 
     ```json
@@ -335,10 +360,56 @@ Note: all http request in the documentation was done thourgh cli tool called htt
         "success": true
     }
     ```
+## DELETE /actors/:id
+- delete actor data 
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http DELETE 127.0.0.1:8080/actors/1  'Authorization: Bearer '"$jwt_executive_producer"''
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 36
+    Content-Type: application/json
+    Date: Sat, 24 Apr 2021 19:14:01 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "id": "2",
+        "success": true
+    }
+    ```
+
+## DELETE /movies/:id
+- delete movie data 
+- Request Arguments: None
+- Returns: HTTP Status code 200
+- Sample: 
+    ```bash
+    http DELETE 127.0.0.1:8080/movies/1  'Authorization: Bearer '"$jwt_executive_producer"''
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 36
+    Content-Type: application/json
+    Date: Sat, 24 Apr 2021 19:10:20 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "id": "2",
+        "success": true
+    }
+    ```
 
 # Testing Instructions
 To run the tests:
 ```bash
+source setup.sh
 dropdb casting_agency_test
 createdb casting_agency_test
 psql casting_agency_test < casting_agency

@@ -79,7 +79,6 @@ def create_app(test_config=None):
         'actor': data
       }), 201
     except Exception as e:
-      print(e)
       return abort(400)
 
 
@@ -95,7 +94,7 @@ def create_app(test_config=None):
         'success': True,
         'movie': data
       }), 201
-    except:
+    except Exception as e:      
       return abort(400)
 
   @app.route('/actors/<id>', methods=['PATCH'])
@@ -138,12 +137,40 @@ def create_app(test_config=None):
       abort(400)
 
   @app.route('/actors/<id>', methods=['DELETE'])
+  @requires_auth('delete:actors')
   def delete_actor(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      actor_movies = MovieActor.query.filter_by(actor_id=kwargs['id']).all()
+      for actor_movie in actor_movies:
+        actor_movie.delete()
+
+      actor = Actor.query.filter_by(id=kwargs['id']).all()[0]
+      actor.delete()
+
+      return jsonify({
+        'success': True,
+        'id': kwargs['id'],
+      })
+    except Exception as e:
+      return abort(400)
 
   @app.route('/movies/<id>', methods=['DELETE'])
+  @requires_auth('delete:movies')
   def delete_movie(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      actor_movies = MovieActor.query.filter_by(movie_id=kwargs['id']).all()
+      for actor_movie in actor_movies:
+        actor_movie.delete()
+
+      movie = Movie.query.filter_by(id=kwargs['id']).all()[0]
+      movie.delete()
+
+      return jsonify({
+        'success': True,
+        'id': kwargs['id'],
+      })
+    except Exception as e:
+      return abort(400)
 
   '''
   Error Handlers based on HTTP status codes

@@ -1,3 +1,4 @@
+import os
 import json
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
@@ -5,10 +6,9 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = "fsnd-aa.us.auth0.com"
+AUTH0_DOMAIN = os.environ.get('auth0_domain')
 ALGORITHMS = ["RS256"]
-API_AUDIENCE = "casting"
-
+API_AUDIENCE = os.environ.get('auth0_client_id')
 
 """
 AuthError Exception

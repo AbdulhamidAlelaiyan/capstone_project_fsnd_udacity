@@ -17,9 +17,9 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         # Setting the tokens for authentication and authorization
         self.tokens = {
-            'casting_assistant': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImY2WXV5dU81eDZscWMzV0xGcWl5RSJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtYWEudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwODE0NzM2MTMwYzY1MDA3MGQ5YjYzZiIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE2MTkyODI2MzgsImV4cCI6MTYxOTM2OTAzOCwiYXpwIjoiTTluZkVlSGxpeWxHMk11N0pmSFNoNGJsQlIzTnFZdU8iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbInJlYWQ6YWN0b3JzIiwicmVhZDptb3ZpZXMiXX0.FfyihX8DH6ECpvR7D-jF-NEjeUQKIj2qhxrXswiCWvywikg12QdqLVZD2u_90VgXkgV6SQW--34OBQ1IFQQaTNSUL3ibxY5ahn9WR670aKdF7cBSLrwoYhF5xGS7cREsDn4RtMtbVO1xq-oTW8QHP7Zz-tSC3g5ahIp2oUsMIQrtWtnP9SVaXIv9Oghi7uX18LwS9-V_sL05SM8AmuTliiF85XmjnMKg9bOi9-IXpE8XBUEa1t74U5690ivNpO29TdOsJek-XaEie264HMvuQsKXqL2wCsuROUegdF5RNw_rtLT5dqSLBmiIua6q5XekHe91BFuK6nlsckhFPCEvVA',
-            'casting_director': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImY2WXV5dU81eDZscWMzV0xGcWl5RSJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtYWEudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwODE0NzY3OGJiYzM4MDA2OTc5MDE3NSIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE2MTkyODI2OTksImV4cCI6MTYxOTM2OTA5OSwiYXpwIjoiTTluZkVlSGxpeWxHMk11N0pmSFNoNGJsQlIzTnFZdU8iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImNyZWF0ZTphY3RvcnMiLCJkZWxldGU6YWN0b3JzIiwicmVhZDphY3RvcnMiLCJyZWFkOm1vdmllcyIsInVwZGF0ZTphY3RvcnMiLCJ1cGRhdGU6bW92aWVzIl19.XwNZb8f7HXHPyxH4lvB_IB1D7aS_THG6VGsv1xOqO-41xVZlCTrfE6JXhd1Dp5jBW6gPT7wnSxzD80g_bs-uiNIWyoi9Y7SlQZ1VHFOhiYolQCQqXx7466rZ4l7oz3BKWSA4N7iH5THWRd4EjbNsCTuXnP9ogHJNZgNhJNLhrGkt9zJtQqbl_Toc2UEW5tyt-tfzT4kTDpU53fg7PYNiUE_tBwe8FneR23Td1RB4osmFllMS4Hf_aK-Wrx7maR67L09lCLUemePr7PBOnzRZA1pa4PgTadR2MPSK5IA-MiSHeCt-mGxlKyUndRYK5WsKp7rkONVEOccUfOQxw7Oe3w',
-            'executive_producer': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImY2WXV5dU81eDZscWMzV0xGcWl5RSJ9.eyJpc3MiOiJodHRwczovL2ZzbmQtYWEudXMuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDYwODE0Nzk3Y2YyODAxMDA3MmNjZTZkYSIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE2MTkyODI3NjgsImV4cCI6MTYxOTM2OTE2OCwiYXpwIjoiTTluZkVlSGxpeWxHMk11N0pmSFNoNGJsQlIzTnFZdU8iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImNyZWF0ZTphY3RvcnMiLCJjcmVhdGU6bW92aWVzIiwiZGVsZXRlOmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIiwidXBkYXRlOmFjdG9ycyIsInVwZGF0ZTptb3ZpZXMiXX0.FHfgHR5Ydocp3JjOIbLcys1zpITmf0fx7waHHohX7tiC-jlPQcdiOowARy__0EUk1iKMeXFXNl7iXIQZ2OeZOn4lcaPUxfrAl4c7kKirpM94SCEYEP9VBGhLjBmID3c1gLufnpVEMENHCAW1MMhfDxicEDurhX7_nhgrAtDwy3tnlKWvTfqn5u36o9D-NufLhsOScvyCSzNWYpyKaagsB_3PFZeJyepB4tUnsOiJYctvW48VRNzEWiQFe-qzKN-9nBAY-l8qGudlnsnUDx2gucTpw0Chqx1W7L9K6PtFPDiasRkqtr5QsQkBtHVFXpKGurNZs_JH1uKu-1pvPZ26mw'
+            'casting_assistant': f'Bearer {os.environ.get("jwt_casting_assistant")}',
+            'casting_director': f'Bearer {os.environ.get("jwt_casting_director")}',
+            'executive_producer': f'Bearer {os.environ.get("jwt_executive_producer")}',
         }
         # Setting the default headers
         self.headers = {
@@ -32,6 +32,26 @@ class CastingAgencyTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             # create all tables
             self.db.create_all()
+
+        # self.actor_1 = Actor(name="actor name 1", age=21, gender="male", id=1)
+        # self.actor_2 = Actor(name="actor name 2", age=23, gender="female", id=2)
+
+        # self.actor_1.insert()
+        # self.actor_2.insert()
+
+        # self.movie_1 = Movie(title="movie title 1", release_date="2020-10-10", id=1)
+        # self.movie_2 = Movie(title="movie title 2", release_date="2022-10-10", id=2)
+
+        # self.movie_1.insert()
+        # self.movie_2.insert()
+
+
+    # def tearDown(self):
+    #     self.actor_1.delete()
+    #     self.actor_2.delete()
+
+    #     self.movie_1.delete()
+    #     self.movie_2.delete()
 
     def test_authenticated_get_actors(self):
         self.headers['Authorization'] = self.tokens['casting_assistant']
@@ -168,6 +188,87 @@ class CastingAgencyTestCase(unittest.TestCase):
         response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
         
         self.assertEqual(response.status_code, 401)
+
+    def test_authenticated_delete_actor(self):
+        self.headers['Authorization'] = self.tokens['executive_producer']
+        response = self.client().delete('/actors/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 200)
+
+    def test_unauthenticated_delete_actor(self):
+        response = self.client().delete('/actors/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 401)
+
+    def test_authenticated_delete_movie(self):
+        self.headers['Authorization'] = self.tokens['executive_producer']
+        response = self.client().delete('/movies/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 200)
+
+    def test_unauthenticated_delete_movie(self):
+        response = self.client().delete('/movies/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 401)
+
+    # RBAC Tests 
+
+    # Casting assistant Role
+    def test_casting_assistant_unauthorized_delete_movie(self):
+        self.headers['Authorization'] = self.tokens['casting_assistant']
+        response = self.client().delete('/movies/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 403)
+
+    def test__casting_assistant_unauthorized_update_movie(self):
+        update_data = {
+            "title": "some title 101",
+        }
+
+        self.headers['Authorization'] = self.tokens['casting_assistant']
+        response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
+
+        self.assertEqual(response.status_code, 403)
+
+    # Casting director Role
+    def test_casting_director_unauthorized_create_movie(self):
+        movie = {
+            "title": "ahmed khalid",
+            "release_date": '2020-10-10',
+        }
+
+        self.headers['Authorization'] = self.tokens['casting_director']
+        response = self.client().post('/movies', json=movie, headers=self.headers)
+        
+        self.assertEqual(response.status_code, 403)
+
+    def test_casting_director_unauthorized_delete_movie(self):
+        self.headers['Authorization'] = self.tokens['casting_director']
+        response = self.client().delete('/movies/3', headers=self.headers)
+        
+        self.assertEqual(response.status_code, 403)
+
+    # Executive producer Role
+    def test_executive_producer_authorized_create_actor(self):
+        actor = {
+            "name": "ahmed khalid",
+            "age": 20,
+            "gender": "male",
+        }
+
+        self.headers['Authorization'] = self.tokens['executive_producer']
+        response = self.client().post('/actors', json=actor, headers=self.headers)
+        
+        self.assertEqual(response.status_code, 201)
+
+    def test_executive_producer_authorized_get_actor_by_id(self):
+        self.headers['Authorization'] = self.tokens['executive_producer']
+
+        response = self.client().get('/actors/1', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertTrue(data['actor'])
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":

@@ -23,7 +23,7 @@ class Movie(db.Model):
     title = Column(String, nullable=False)
     release_date = Column(DateTime, nullable=False)
 
-    def  __init__(self, title, release_date):
+    def  __init__(self, title, release_date, **kwargs):
         self.title = title
         self.release_date = release_date
 
@@ -67,7 +67,7 @@ class Actor(db.Model):
     age = Column(Integer, nullable=False)
     gender = Column(String, nullable=False)
 
-    def  __init__(self, name, age, gender):
+    def  __init__(self, name, age, gender, **kwargs):
         self.name = name
         self.age = age
         self.gender = gender
