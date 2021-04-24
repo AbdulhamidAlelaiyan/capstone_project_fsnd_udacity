@@ -413,7 +413,6 @@ For database connections you must go to setup.sh and update the template with th
 source setup.sh
 dropdb casting_agency_test
 createdb casting_agency_test
-psql casting_agency_test < casting_agency
-psql casting_agency_test < casting_agency_data.dump
+psql casting_agency_test < casting_agency_test_data
 python3 test_app.py
 ```
