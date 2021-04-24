@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app import create_app
 from models import setup_db, Movie, Actor, MovieActor
 
+
 class CastingAgencyTestCase(unittest.TestCase):
     """This class represents the casting agency test case"""
 
@@ -44,7 +45,6 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         # self.movie_1.insert()
         # self.movie_2.insert()
-
 
     # def tearDown(self):
     #     self.actor_1.delete()
@@ -118,7 +118,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['casting_director']
         response = self.client().post('/actors', json=actor, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 201)
 
     def test_unauthenticated_create_actor(self):
@@ -128,7 +128,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "gender": "male",
         }
         response = self.client().post('/actors', json=actor, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_create_movie(self):
@@ -139,7 +139,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().post('/movies', json=movie, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 201)
 
     def test_unauthenticated_create_movie(self):
@@ -148,7 +148,7 @@ class CastingAgencyTestCase(unittest.TestCase):
             "release_date": '2020-10-10',
         }
         response = self.client().post('/movies', json=movie, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_update_actor(self):
@@ -158,7 +158,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().patch('/actors/1', json=update_data, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 200)
 
     def test_unauthenticated_update_actor(self):
@@ -167,7 +167,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         response = self.client().patch('/actors/1', json=update_data, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_update_movie(self):
@@ -177,7 +177,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 200)
 
     def test_unauthenticated_update_movie(self):
@@ -186,38 +186,38 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_delete_actor(self):
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().delete('/actors/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 200)
 
     def test_unauthenticated_delete_actor(self):
         response = self.client().delete('/actors/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
     def test_authenticated_delete_movie(self):
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().delete('/movies/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 200)
 
     def test_unauthenticated_delete_movie(self):
         response = self.client().delete('/movies/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 401)
 
-    # RBAC Tests 
+    # RBAC Tests
 
     # Casting assistant Role
     def test_casting_assistant_unauthorized_delete_movie(self):
         self.headers['Authorization'] = self.tokens['casting_assistant']
         response = self.client().delete('/movies/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 403)
 
     def test__casting_assistant_unauthorized_update_movie(self):
@@ -239,13 +239,13 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['casting_director']
         response = self.client().post('/movies', json=movie, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 403)
 
     def test_casting_director_unauthorized_delete_movie(self):
         self.headers['Authorization'] = self.tokens['casting_director']
         response = self.client().delete('/movies/3', headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 403)
 
     # Executive producer Role
@@ -258,7 +258,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.headers['Authorization'] = self.tokens['executive_producer']
         response = self.client().post('/actors', json=actor, headers=self.headers)
-        
+
         self.assertEqual(response.status_code, 201)
 
     def test_executive_producer_authorized_get_actor_by_id(self):

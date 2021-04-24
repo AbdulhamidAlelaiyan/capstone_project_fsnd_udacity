@@ -14,6 +14,8 @@ API_AUDIENCE = os.environ.get('auth0_client_id')
 AuthError Exception
 A standardized way to communicate auth failure modes
 """
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error

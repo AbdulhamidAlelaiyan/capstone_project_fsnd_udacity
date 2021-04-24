@@ -6,6 +6,7 @@ Application that helps agencies to assign actors to movies.
 
 # Installation Instructions
 ```bash
+source setup.sh
 pip3 install -r requirements.txt
 export DATABASE_URL="postgresql://[user]:[pass]@[addr]:[port]/[db_name]"
 python3 manage.py db init
