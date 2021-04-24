@@ -9,7 +9,6 @@ For database connections you must go to setup.sh and update the template with th
 ```bash
 source setup.sh
 pip3 install -r requirements.txt
-python3 manage.py db init
 python3 manage.py db upgrade
 python3 app.py
 ```
