@@ -1,5 +1,6 @@
 import os
-from sqlalchemy import Column, String, create_engine, Integer, DateTime, ForeignKey
+from sqlalchemy import (Column, String, create_engine, Integer, DateTime,
+                        ForeignKey)
 from flask_sqlalchemy import SQLAlchemy
 
 database_path = os.environ.get('DATABASE_URL', '')
@@ -47,9 +48,11 @@ class Movie(db.Model):
         # actors_formatted = [actor.format() for actor in actors]
         if depth:
             actors_ids = MovieActor.query.filter_by(movie_id=self.id).all()
-            actors_formatted = [Actor.query.filter_by(
-                id=actor_id.actor_id).first().format(False)
-                for actor_id in actors_ids]
+            actors_formatted = [
+                Actor.query.filter_by(
+                    id=actor_id.actor_id).first().format(False)
+                for actor_id in actors_ids
+            ]
             return {
                 'title': self.title,
                 'release_date': self.release_date,
@@ -94,9 +97,11 @@ class Actor(db.Model):
     def format(self, depth=True):
         if depth:
             movies_ids = MovieActor.query.filter_by(actor_id=self.id).all()
-            movies_formatted = [Movie.query.filter_by(
-                id=movie_id.movie_id).first().format(False)
-                for movie_id in movies_ids]
+            movies_formatted = [
+                Movie.query.filter_by(
+                    id=movie_id.movie_id).first().format(False)
+                for movie_id in movies_ids
+            ]
             return {
                 'name': self.name,
                 'age': self.age,
@@ -113,24 +118,18 @@ class Actor(db.Model):
 
 '''
 MovieActor
-Intermediary table that links actors table to movies table (many to many relationships, actors can act in many movies and movies can have many actors)
+Intermediary table that links actors
+    table to movies table (many to many relationships,
+    actors can act in many movies and movies can have many actors)
 '''
 
 
 class MovieActor(db.Model):
     __tablename__ = 'movie_actor'
 
-    actor_id = Column(
-        Integer,
-        ForeignKey('actors.id'),
-        primary_key=True
-    )
+    actor_id = Column(Integer, ForeignKey('actors.id'), primary_key=True)
 
-    movie_id = Column(
-        Integer,
-        ForeignKey('movies.id'),
-        primary_key=True
-    )
+    movie_id = Column(Integer, ForeignKey('movies.id'), primary_key=True)
 
     def __init__(self, movie_id, actor_id):
         self.movie_id = movie_id

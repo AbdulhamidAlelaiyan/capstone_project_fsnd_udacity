@@ -5,10 +5,10 @@ Application that helps agencies to assign actors to movies.
 ![Database Diagram](https://i.ibb.co/KsNHmPw/Screen-Shot-2021-04-22-at-11-33-02-AM.png)
 
 # Installation Instructions
+For database connections you must go to setup.sh and update the template with the correct data (examples are provided at the end of the shell file).
 ```bash
 source setup.sh
 pip3 install -r requirements.txt
-export DATABASE_URL="postgresql://[user]:[pass]@[addr]:[port]/[db_name]"
 python3 manage.py db init
 python3 manage.py db upgrade
 python3 app.py
@@ -409,6 +409,7 @@ Note: all http request in the documentation was done thourgh cli tool called htt
 
 # Testing Instructions
 To run the tests:
+For database connections you must go to setup.sh and update the template with the correct data (examples are provided at the end of the shell file).
 ```bash
 source setup.sh
 dropdb casting_agency_test

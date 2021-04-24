@@ -5,11 +5,9 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 
-
 AUTH0_DOMAIN = os.environ.get('auth0_domain')
 ALGORITHMS = ["RS256"]
 API_AUDIENCE = os.environ.get('auth0_client_id')
-
 """
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -36,13 +34,17 @@ def get_token_auth_header():
     parts = auth.split()
     if parts[0].lower() != "bearer":
         raise AuthError(
-            {"code": "invalid_header", "description": "Token not founnd."}, 401
-        )
+            {
+                "code": "invalid_header",
+                "description": "Token not founnd."
+            }, 401)
 
     elif len(parts) == 1:
         raise AuthError(
-            {"code": "invalid_header", "description": "Token not found."}, 401
-        )
+            {
+                "code": "invalid_header",
+                "description": "Token not found."
+            }, 401)
 
     elif len(parts) > 2:
         raise AuthError(
@@ -69,7 +71,10 @@ def check_permissions(permission, payload):
 
     if permission not in payload["permissions"]:
         raise AuthError(
-            {"code": "unauthorized", "description": "Permission  not found."},
+            {
+                "code": "unauthorized",
+                "description": "Permission  not found."
+            },
             403,
         )
 
@@ -113,15 +118,19 @@ def verify_decode_jwt(token):
 
         except jwt.ExpiredSignatureError:
             raise AuthError(
-                {"code": "token_expired", "description": "Token expired."}, 401
-            )
+                {
+                    "code": "token_expired",
+                    "description": "Token expired."
+                }, 401)
 
         except jwt.JWTClaimsError:
             raise AuthError(
                 {
-                    "code": "invalid_claims",
-                    "description": "Incorrect claims. "
-                    + "Please, check the audience and issuer.",
+                    "code":
+                    "invalid_claims",
+                    "description":
+                    "Incorrect claims. " +
+                    "Please, check the audience and issuer.",
                 },
                 401,
             )

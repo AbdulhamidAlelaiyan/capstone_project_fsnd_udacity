@@ -13,33 +13,23 @@ def create_app(test_config=None):
     '''
     App routes
   '''
-
     @app.route('/')
     def check_health():
-        return jsonify({
-            "success": True,
-            "message": "Server working fine"
-        })
+        return jsonify({"success": True, "message": "Server working fine"})
 
     @app.route('/actors')
     @requires_auth('read:actors')
     def get_all_actor(*args, **kwargs):
         actors = Actor.query.all()
         actors_formatted = [actor.format() for actor in actors]
-        return jsonify({
-            'actors': actors_formatted,
-            'success': True
-        })
+        return jsonify({'actors': actors_formatted, 'success': True})
 
     @app.route('/movies')
     @requires_auth('read:movies')
     def get_all_movies(*args, **kwargs):
         movies = Movie.query.all()
         movies_formatted = [movie.format() for movie in movies]
-        return jsonify({
-            'movies': movies_formatted,
-            'success': True
-        })
+        return jsonify({'movies': movies_formatted, 'success': True})
 
     @app.route('/actors/<id>')
     @requires_auth('read:actors')
@@ -70,16 +60,12 @@ def create_app(test_config=None):
     def create_actor(*args, **kwargs):
         try:
             data = request.get_json()
-            new_actor = Actor(
-                name=data['name'],
-                age=data['age'],
-                gender=data['gender'])
+            new_actor = Actor(name=data['name'],
+                              age=data['age'],
+                              gender=data['gender'])
             new_actor.insert()
 
-            return jsonify({
-                'success': True,
-                'actor': data
-            }), 201
+            return jsonify({'success': True, 'actor': data}), 201
         except Exception as e:
             return abort(400)
 
@@ -88,15 +74,11 @@ def create_app(test_config=None):
     def create_movie(*args, **kwargs):
         try:
             data = request.get_json()
-            new_movie = Movie(
-                title=data['title'],
-                release_date=data['release_date'])
+            new_movie = Movie(title=data['title'],
+                              release_date=data['release_date'])
             new_movie.insert()
 
-            return jsonify({
-                'success': True,
-                'movie': data
-            }), 201
+            return jsonify({'success': True, 'movie': data}), 201
         except Exception as e:
             return abort(400)
 
@@ -113,10 +95,7 @@ def create_app(test_config=None):
 
             actor.update()
 
-            return jsonify({
-                'actor': data,
-                'success': True
-            }), 200
+            return jsonify({'actor': data, 'success': True}), 200
         except BaseException:
             abort(400)
 
@@ -132,10 +111,7 @@ def create_app(test_config=None):
 
             movie.update()
 
-            return jsonify({
-                'movie': data,
-                'success': True
-            }), 200
+            return jsonify({'movie': data, 'success': True}), 200
         except BaseException:
             abort(400)
 
@@ -180,59 +156,70 @@ def create_app(test_config=None):
     '''
   Error Handlers based on HTTP status codes
   '''
+
     @app.errorhandler(400)
     def unauthenticated_access(error):
         return (
-            jsonify(
-                {"success": False, "error": 400, "message": "bad request"}
-            ),
+            jsonify({
+                "success": False,
+                "error": 400,
+                "message": "bad request"
+            }),
             400,
         )
 
     @app.errorhandler(401)
     def unauthenticated_access(error):
         return (
-            jsonify(
-                {"success": False, "error": 401, "message": "user unauthenticated"}
-            ),
+            jsonify({
+                "success": False,
+                "error": 401,
+                "message": "user unauthenticated"
+            }),
             401,
         )
 
     @app.errorhandler(403)
     def unauthorized_access(error):
         return (
-            jsonify(
-                {"success": False, "error": 403, "message": "user unauthorized"}
-            ),
+            jsonify({
+                "success": False,
+                "error": 403,
+                "message": "user unauthorized"
+            }),
             403,
         )
 
     @app.errorhandler(404)
     def not_found(error):
         return (
-            jsonify(
-                {"success": False, "error": 404, "message": "resource not found"}
-            ),
+            jsonify({
+                "success": False,
+                "error": 404,
+                "message": "resource not found"
+            }),
             404,
         )
 
     @app.errorhandler(422)
     def unprocessable(error):
         return (
-            jsonify({"success": False, "error": 422, "message": "unprocessable"}),
+            jsonify({
+                "success": False,
+                "error": 422,
+                "message": "unprocessable"
+            }),
             422,
         )
 
     @app.errorhandler(500)
     def unprocessable(error):
         return (
-            jsonify(
-                {
-                    "success": False,
-                    "error": 500,
-                    "message": "internal server error",
-                }
-            ),
+            jsonify({
+                "success": False,
+                "error": 500,
+                "message": "internal server error",
+            }),
             500,
         )
 

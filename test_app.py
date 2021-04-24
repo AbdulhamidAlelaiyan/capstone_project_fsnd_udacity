@@ -9,18 +9,20 @@ from models import setup_db, Movie, Actor, MovieActor
 
 class CastingAgencyTestCase(unittest.TestCase):
     """This class represents the casting agency test case"""
-
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_path = "postgresql://postgres@localhost:5432/casting_agency_test"
+        self.database_path = os.environ.get('TEST_DATABASE_URL')
         setup_db(self.app, self.database_path)
 
         # Setting the tokens for authentication and authorization
         self.tokens = {
-            'casting_assistant': f'Bearer {os.environ.get("jwt_casting_assistant")}',
-            'casting_director': f'Bearer {os.environ.get("jwt_casting_director")}',
-            'executive_producer': f'Bearer {os.environ.get("jwt_executive_producer")}',
+            'casting_assistant':
+            f'Bearer {os.environ.get("jwt_casting_assistant")}',
+            'casting_director':
+            f'Bearer {os.environ.get("jwt_casting_director")}',
+            'executive_producer':
+            f'Bearer {os.environ.get("jwt_executive_producer")}',
         }
         # Setting the default headers
         self.headers = {
@@ -33,25 +35,6 @@ class CastingAgencyTestCase(unittest.TestCase):
             self.db.init_app(self.app)
             # create all tables
             self.db.create_all()
-
-        # self.actor_1 = Actor(name="actor name 1", age=21, gender="male", id=1)
-        # self.actor_2 = Actor(name="actor name 2", age=23, gender="female", id=2)
-
-        # self.actor_1.insert()
-        # self.actor_2.insert()
-
-        # self.movie_1 = Movie(title="movie title 1", release_date="2020-10-10", id=1)
-        # self.movie_2 = Movie(title="movie title 2", release_date="2022-10-10", id=2)
-
-        # self.movie_1.insert()
-        # self.movie_2.insert()
-
-    # def tearDown(self):
-    #     self.actor_1.delete()
-    #     self.actor_2.delete()
-
-    #     self.movie_1.delete()
-    #     self.movie_2.delete()
 
     def test_authenticated_get_actors(self):
         self.headers['Authorization'] = self.tokens['casting_assistant']
@@ -117,7 +100,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['casting_director']
-        response = self.client().post('/actors', json=actor, headers=self.headers)
+        response = self.client().post('/actors',
+                                      json=actor,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 201)
 
@@ -127,7 +112,9 @@ class CastingAgencyTestCase(unittest.TestCase):
             "age": 20,
             "gender": "male",
         }
-        response = self.client().post('/actors', json=actor, headers=self.headers)
+        response = self.client().post('/actors',
+                                      json=actor,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 401)
 
@@ -138,7 +125,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['executive_producer']
-        response = self.client().post('/movies', json=movie, headers=self.headers)
+        response = self.client().post('/movies',
+                                      json=movie,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 201)
 
@@ -147,7 +136,9 @@ class CastingAgencyTestCase(unittest.TestCase):
             "title": "ahmed khalid",
             "release_date": '2020-10-10',
         }
-        response = self.client().post('/movies', json=movie, headers=self.headers)
+        response = self.client().post('/movies',
+                                      json=movie,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 401)
 
@@ -157,7 +148,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['executive_producer']
-        response = self.client().patch('/actors/1', json=update_data, headers=self.headers)
+        response = self.client().patch('/actors/1',
+                                       json=update_data,
+                                       headers=self.headers)
 
         self.assertEqual(response.status_code, 200)
 
@@ -166,7 +159,9 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "some actor 101",
         }
 
-        response = self.client().patch('/actors/1', json=update_data, headers=self.headers)
+        response = self.client().patch('/actors/1',
+                                       json=update_data,
+                                       headers=self.headers)
 
         self.assertEqual(response.status_code, 401)
 
@@ -176,7 +171,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['executive_producer']
-        response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
+        response = self.client().patch('/movies/1',
+                                       json=update_data,
+                                       headers=self.headers)
 
         self.assertEqual(response.status_code, 200)
 
@@ -185,7 +182,9 @@ class CastingAgencyTestCase(unittest.TestCase):
             "name": "some title 101",
         }
 
-        response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
+        response = self.client().patch('/movies/1',
+                                       json=update_data,
+                                       headers=self.headers)
 
         self.assertEqual(response.status_code, 401)
 
@@ -226,7 +225,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['casting_assistant']
-        response = self.client().patch('/movies/1', json=update_data, headers=self.headers)
+        response = self.client().patch('/movies/1',
+                                       json=update_data,
+                                       headers=self.headers)
 
         self.assertEqual(response.status_code, 403)
 
@@ -238,7 +239,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['casting_director']
-        response = self.client().post('/movies', json=movie, headers=self.headers)
+        response = self.client().post('/movies',
+                                      json=movie,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 403)
 
@@ -257,7 +260,9 @@ class CastingAgencyTestCase(unittest.TestCase):
         }
 
         self.headers['Authorization'] = self.tokens['executive_producer']
-        response = self.client().post('/actors', json=actor, headers=self.headers)
+        response = self.client().post('/actors',
+                                      json=actor,
+                                      headers=self.headers)
 
         self.assertEqual(response.status_code, 201)
 
