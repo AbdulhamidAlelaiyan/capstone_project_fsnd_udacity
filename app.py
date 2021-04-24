@@ -99,12 +99,43 @@ def create_app(test_config=None):
       return abort(400)
 
   @app.route('/actors/<id>', methods=['PATCH'])
+  @requires_auth('update:actors')
   def update_actor(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      data = request.get_json()
+      actor = Actor.query.filter_by(id=kwargs['id']).all()[0]
+
+      actor.name = data.get('name', actor.name)
+      actor.age = data.get('age', actor.age)
+      actor.gender = data.get('gender', actor.gender)
+
+      actor.update()
+
+      return jsonify({
+        'actor': data,
+        'success': True
+        }), 200
+    except:
+      abort(400)
 
   @app.route('/movies/<id>', methods=['PATCH'])
+  @requires_auth('update:movies')
   def update_movie(*args, **kwargs):
-    return "Not implemented 'yet'!"
+    try:
+      data = request.get_json()
+      movie = Movie.query.filter_by(id=kwargs['id']).all()[0]
+
+      movie.title = data.get('title', movie.title)
+      movie.release_date = data.get('release_date', movie.release_date)
+
+      movie.update()
+
+      return jsonify({
+        'movie': data,
+        'success': True
+        }), 200
+    except:
+      abort(400)
 
   @app.route('/actors/<id>', methods=['DELETE'])
   def delete_actor(*args, **kwargs):

@@ -50,18 +50,18 @@ All permissions a Casting Director has and:
         - [x] Documentation
         - [x] Testing
         - [x] Implementation
-    - [ ] POST /movies
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
-    - [ ] PATCH /actors/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
-    - [ ] PATCH /movies/:id
-        - [ ] Documentation
-        - [ ] Testing
-        - [ ] Implementation
+    - [x] POST /movies
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
+    - [x] PATCH /actors/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
+    - [x] PATCH /movies/:id
+        - [x] Documentation
+        - [x] Testing
+        - [x] Implementation
     - [ ] DELETE /actors/:id
         - [ ] Documentation
         - [ ] Testing
@@ -307,6 +307,30 @@ Note: all http request in the documentation was done thourgh cli tool called htt
         "movie": {
             "release_date": "2020-10-10",
             "title": "sometitle 123"
+        },
+        "success": true
+    }
+    ```
+## PATCH /movies/:id
+- create new movie 
+- Request Arguments: None
+- Returns: HTTP Status code 201
+- Sample: 
+    ```bash
+    http PATCH 127.0.0.1:8080/movies/1  'Authorization: Bearer ${TOKEN}' title='someactor 102'
+    ```
+- Response: 
+    ```json
+    HTTP/1.0 200 OK
+    Access-Control-Allow-Origin: *
+    Content-Length: 70
+    Content-Type: application/json
+    Date: Sat, 24 Apr 2021 16:47:33 GMT
+    Server: Werkzeug/0.15.5 Python/3.9.2
+
+    {
+        "movie": {
+            "title": "someactor 102"
         },
         "success": true
     }
