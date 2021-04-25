@@ -9,6 +9,7 @@ from models import setup_db, Movie, Actor, MovieActor
 
 class CastingAgencyTestCase(unittest.TestCase):
     """This class represents the casting agency test case"""
+
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
