@@ -13,6 +13,7 @@ pip3 install -r requirements.txt
 python3 manage.py db upgrade
 python3 app.py
 ```
+All JWTs can be found in setup.sh env variables
 
 # Roles
 ## Casting Assistant
